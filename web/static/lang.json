@@ -1,0 +1,24 @@
+{
+    "en": {
+        "title": "MassPay",
+        "uploadHeading": "MassPay",
+        "executionDateLabel": "Date of Execution",
+        "ibanLabel": "IBAN of Ordering Party",
+        "companyNameLabel": "Company Name",
+        "selectFileLabel": "Select File",
+        "uploadButton": "Submit",
+        "downloadSuccess": "File processed and downloaded!",
+        "processSuccess": "File processed successfully"
+    },
+    "bg": {
+        "title": "MassPay",
+        "uploadHeading": "MassPay",
+        "executionDateLabel": "Дата на изпълнение",
+        "ibanLabel": "IBAN на наредителя",
+        "companyNameLabel": "Име на компанията",
+        "selectFileLabel": "Избор на файл",
+        "uploadButton": "Изпращане",
+        "downloadSuccess": "Файлът е обработен и изтеглен!",
+        "processSuccess": "Файлът е успешно обработен"
+    }
+}
