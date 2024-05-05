@@ -1,0 +1,27 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  masspay_1:
+    image: masspay:latest
+    container_name: masspay_1
+    ports:
+      - "9001:9000"
+    volumes:
+      - /var/docker_volumes/masspay/masspay_1/logs:/app/log
+      - /var/docker_volumes/masspay/masspay_1/temp:/app/temp
+
+  masspay_2:
+    image: masspay:latest
+    container_name: masspay_2
+    ports:
+      - "9002:9000"
+    volumes:
+      - /var/docker_volumes/masspay/masspay_2/logs:/app/log
+      - /var/docker_volumes/masspay/masspay_2/temp:/app/temp
+
+volumes:
+  masspay_1_logs:
+  masspay_1_temp:
+  masspay_2_logs:
+  masspay_2_temp:

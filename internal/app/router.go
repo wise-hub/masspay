@@ -1,12 +1,9 @@
 package app
 
 import (
-	"net/http"
-	"os"
-	"path/filepath"
-	"strings"
-
 	"masspay/internal/handler"
+	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
@@ -23,9 +20,17 @@ func NewRouter() *chi.Mux {
 		MaxAge:           300,
 	}))
 
-	r.Post("/upload", handler.FileUploadHandler)
-	r.Get("/", serveFile("web/index.html"))
-	setupStaticFiles(r, "/static", "web/static")
+	r.Use(removeTrailingSlashMiddleware)
+
+	r.NotFound(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		http.Redirect(w, r, "/masspay", http.StatusFound)
+	}))
+
+	r.Route("/", func(r chi.Router) {
+		r.Post("/masspay/api/upload", handler.FileUploadHandler)
+		r.Get("/masspay", serveFile("./web/index.html"))
+		serveAllStaticFiles(r, "/masspay/static", "./web/static")
+	})
 
 	return r
 }
@@ -36,26 +41,19 @@ func serveFile(path string) http.HandlerFunc {
 	}
 }
 
-func setupStaticFiles(r *chi.Mux, path, dir string) {
-	workDir, _ := os.Getwd()
-	filesDir := http.Dir(filepath.Join(workDir, dir))
-	FileServer(r, path, filesDir)
+func serveAllStaticFiles(r chi.Router, route string, dir string) {
+	fs := http.StripPrefix(route, http.FileServer(http.Dir(dir)))
+	r.Get(route+"/*", func(w http.ResponseWriter, r *http.Request) {
+		fs.ServeHTTP(w, r)
+	})
 }
 
-func FileServer(r chi.Router, path string, root http.FileSystem) {
-	if strings.ContainsAny(path, "{}*") {
-		panic("FileServer does not permit URL parameters.")
-	}
-
-	fs := http.StripPrefix(path, http.FileServer(root))
-
-	if path != "/" && path[len(path)-1] != '/' {
-		r.Get(path, http.RedirectHandler(path+"/", http.StatusMovedPermanently).ServeHTTP)
-		path += "/"
-	}
-	path += "*"
-
-	r.Get(path, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fs.ServeHTTP(w, r)
-	}))
+func removeTrailingSlashMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" && strings.HasSuffix(r.URL.Path, "/") {
+			http.Redirect(w, r, strings.TrimSuffix(r.URL.Path, "/"), http.StatusMovedPermanently)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }

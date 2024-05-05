@@ -1,43 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <title>Upload File - Fibank</title>
+    <link rel="stylesheet" href="/masspay/static/styles.css">
 </head>
 <body>
     <div class="container">
+        <img src="/masspay/static/fibank-logo.png" alt="Fibank Logo" class="logo">
         <div class="language-switcher">
             <select id="languageSelect" onchange="changeLanguage()">
-                <option value="bg"selected>Български</option>
+                <option value="bg" selected>Български</option>
                 <option value="en">English</option>
             </select>
-            <img id="flagIcon" src="static/bg.png?v1" alt="Flag" class="flag-icon">
+            <img id="flagIcon" src="/masspay/static/bg.png?v1" alt="Flag" class="flag-icon">
         </div>
-        <h1 id="uploadHeading"></h1>
+        <h1 id="uploadHeading">Upload File</h1>
         <form id="uploadForm">
             <div class="form-group">
-                <label for="executionDate">Date of Execution:</label>
+                <label for="executionDate">Дата на изпълнение:</label>
                 <input type="date" id="executionDate" required>
             </div>
             <div class="form-group">
-                <label for="iban">IBAN of Ordering Party:</label>
-                <input type="text" id="iban" value="BG74FINV915031BGN0M1YT" placeholder="Enter IBAN" required>
+                <label for="iban">IBAN на наредителя:</label>
+                <input type="text" id="iban" value="BG74FINV915031BGN0M1YT" placeholder="Въведете IBAN" required>
             </div>
             <div class="form-group">
-                <label for="companyName">Company Name:</label>
-                <input type="text" id="companyName" value="Трой TRANSEXPRESS ЕООД" placeholder="Enter Company Name" required>
+                <label for="companyName">Име на компанията:</label>
+                <input type="text" id="companyName" value="Трой TRANSEXPRESS ЕООД" placeholder="Въведете име на компанията" required>
             </div>
             <div class="form-group">
-                <label for="fileInput">Select File:</label>
+                <label for="fileInput">Изберете файл:</label>
                 <input type="file" id="fileInput" required>
             </div>
-            <button type="button" onclick="uploadFile()">Upload</button>
+            <button type="button" onclick="uploadFile()">Качване</button>
             <div id="response-message" class="response-message"></div>
         </form>
     </div>
-    
-    <script src="static/app.js?v=1.1"></script>
+
+    <script src="/masspay/static/app.js?v=1.1"></script>
 </body>
 </html>

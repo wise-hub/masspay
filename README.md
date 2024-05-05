@@ -32,3 +32,24 @@ in the original file, there is a new line after the last record, also line width
 
 
 ```
+
+
+```
+nginx
+
+	upstream masspay_upstream {
+		server localhost:9001;
+		server localhost:9002;
+		keepalive 128;
+	}
+
+    location /masspay {
+        proxy_pass http://masspay_upstream/masspay;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection '';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+```

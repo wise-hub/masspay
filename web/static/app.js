@@ -17,10 +17,10 @@ function updateFlagIcon(lang) {
     const flagIcon = document.getElementById('flagIcon');
     switch(lang) {
         case 'en':
-            flagIcon.src = 'static/uk.png';
+            flagIcon.src = './masspay/static/uk.png';
             break;
         case 'bg':
-            flagIcon.src = 'static/bg.png';
+            flagIcon.src = './masspay/static/bg.png';
             break;
     }
 }
@@ -65,7 +65,7 @@ function uploadFile() {
     formData.append('companyName', document.getElementById('companyName').value.toUpperCase());
     formData.append('file', document.getElementById('fileInput').files[0]);
 
-    fetch('upload', {
+    fetch('./masspay/api/upload', {
         method: 'POST',
         body: formData,
     })
